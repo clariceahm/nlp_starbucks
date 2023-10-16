@@ -1,4 +1,13 @@
-## Getting started
+## Starbucks Review NLP
+
+NLP = Natural language processing
+
+A idéia desse repositório é ter um modelo que analise os reviews da starbucks em texto e converter para um valor de 1 a 5 com base no histório de avaliações que contem texto e nota.
+
+### TODO
+
+[ ] Criar jupiter notebook com o modelo
+[ ] Criar uma API para exportar a funcionalidade do modelo
 
 ### Usando o Poetry como gerenciador de pacotes
 
@@ -15,7 +24,7 @@ Para isso siga os passos abaixo:
 
 - Abra um terminal e direcione para a pasta em que deseja iniciar o projeto poetry.
 
-- Digite poetry –version para verificar se o poetry pode ser reconhecido pela pasta em questão.
+- Digite ```bash poetry -–version``` para verificar se o poetry pode ser reconhecido pela pasta em questão.
 
 - Digite poetry new nome_do_projeto.
 
