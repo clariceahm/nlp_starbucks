@@ -4,10 +4,27 @@ NLP = Natural language processing
 
 A idéia desse repositório é ter um modelo que analise os reviews da starbucks em texto e converter para um valor de 1 a 5 com base no histório de avaliações que contem texto e nota.
 
+### Dataset
+
+O dataset utilizado foi o [Starbucks Reviews Dataset](https://www.kaggle.com/datasets/harshalhonde/starbucks-reviews-dataset)
+
+### Setup
+
+```bash
+  poetry install
+  poetry shell
+```
+
+### Run
+
+```bash
+  uvicorn nlp_starbucks.api_predict_score:app --reload
+```
+
 ### TODO
 
-[ ] Criar jupiter notebook com o modelo
-[ ] Criar uma API para exportar a funcionalidade do modelo
+[X] Criar jupiter notebook com o modelo
+[X] Criar uma API para exportar a funcionalidade do modelo
 
 ### Usando o Poetry como gerenciador de pacotes
 
@@ -50,9 +67,9 @@ Agora para instalar os pacotes basta digitar no terminal:
 poetry add nome_do_pacote
 ```
 
-### About Spacy and Poetry
+### About SpaCy and Poetry
 
-Para usar o Spacy como pacote de Processamento de Linguagem Natural é necessário fazer o download do modelo treinado. 
+Para usar o SpaCy como pacote de Processamento de Linguagem Natural é necessário fazer o download do modelo treinado. 
 Para fazer o download do modelo treinado com Poetry basta ir na web page de documentação do Spacy [https://spacy.io/usage#quickstart](https://spacy.io/usage#quickstart)
 e procurar o idioma em que se quer trabalhar. Há várias opções de idioma e algumas opções de modelos mais simples e com mais acurácia.
 Escolha o modelo ideal e procure o link para download na web page [https://github.com/explosion/spacy-models/releases/](https://github.com/explosion/spacy-models/releases/)
