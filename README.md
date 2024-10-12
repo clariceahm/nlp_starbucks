@@ -1,62 +1,73 @@
-## Getting started
+# Starbucks Reviews Analysis with NLP
 
-### Usando o Poetry como gerenciador de pacotes
+This project aims to apply Natural Language Processing (NLP) techniques to a dataset of Starbucks reviews. By utilizing the [spaCy](https://spacy.io/) library, various analyses were conducted to extract valuable insights into customer experiences and brand perception.
 
-Esse projeto utilizou como gerenciador de pacotes o poetry. A documentação para utilização do Poetry encontra-se em
-[https://python-poetry.org/docs/](https://python-poetry.org/docs/)
+## Project Objectives
 
-Para utilizar o poetry para gerenciar seus pacotes basta baixar o poetry com o comando no Power Shell:
-``` bash
-(Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python -
+- **Sentiment Analysis**: Classify reviews into categories such as positive, negative, or neutral.
+- **Entity Extraction**: Identify entities mentioned in the reviews, such as products, locations, and specific aspects of service.
+- **Automatic Summarization**: Create summaries of the reviews to facilitate the visualization of customer opinions.
+- **Data Visualization**: Generate charts and visualizations to illustrate the results of the analyses.
+
+## Technologies Used
+
+- **Python**: The programming language used for the development of the project.
+- **spaCy**: A powerful NLP library that provides efficient tools for text processing.
+- **Pandas**: A library for data manipulation and analysis.
+- **Matplotlib/Seaborn**: Libraries for data visualization.
+
+## Implemented NLP Functions
+
+In the project, two main functions were created for text preprocessing and analysis:
+
+1. **`nlp_function(text)`**: This function performs text preprocessing, applying the following steps:
+   - **Lowercasing**: Normalizes the text to facilitate analysis.
+   - **Removing unwanted characters**: Uses regular expressions to remove URLs, HTML tags, punctuation, and numeric characters.
+   - **Lemmatization**: Applies the trained spaCy model to convert words to their base forms (lemmas).
+   - **Stop Words Removal**: Filters out common words that do not add significant meaning to the analysis.
+
+   ```python
+   def nlp_function(text):
+       ## Apply lower case
+       text = str(text).lower()
+
+       ## Removing characters
+       text = re.sub(r'\[.*?\]', '', text)
+       text = re.sub(r'https?://\S+|www\.\S+', '', text)
+       text = re.sub(r'<.*?>+', '', text)
+       text = re.sub(r'[%s]' % re.escape(string.punctuation), '', text)
+       text = re.sub(r'\n', '', text)
+       text = re.sub(r'\w*\d\w*', '', text)
+
+       ## Applying the trained model (spaCy)
+       doc = nlp(text)
+
+       ## Lemmatization
+       text = " ".join([token.lemma_ for token in doc])
+
+       ## Remove stop words
+       filtered_tokens = [token.text for token in doc if not token.is_stop]
+       text = " ".join(filtered_tokens)
+
+       return text
+    ```
+
+2. **`preprocess_text(text)`**: This function is responsible for filtering and lemmatizing the text, removing stop words and punctuation.
+```python
+
+    def preprocess_text(text):
+        doc = nlp(text)
+        # Filter words (tokens) by removing stop words and punctuation
+        words = [token.lemma_ for token in doc if not token.is_stop and not token.is_punct]
+        return words
 ```
 
-Depois de baixado, é preciso criar um projeto poetry para começar a utilizá-lo.
-Para isso siga os passos abaixo:
+## Installation
 
-- Abra um terminal e direcione para a pasta em que deseja iniciar o projeto poetry.
+To run the project locally, follow the instructions below:
 
-- Digite poetry –version para verificar se o poetry pode ser reconhecido pela pasta em questão.
+1. Clone the repository: git https://github.com/clariceahm/nlp_starbucks.git
+2. Navigate to the project directory: cd yourrepository
+3. Install the dependencies: pip install -r requirements.txt
 
-- Digite poetry new nome_do_projeto.
-
-- Direcione para a nova pasta criada e digite poetry shell para criar um ambiente virtual poetry.
-
-- Após criado o ambiente virtual, digite exit para sair do poetry shell
-
-Se desejar utilizar o jupiter notebook, é necessário instalar o ipykernel.
-O ipykernel pode ser instalado com o comando via terminal: 
-```bash
-poetry run python -m ipykernel install --user --name pymedphys
-```
-
-Ou ainda, ao abrir o projeto na sua IDE (nesse projeto utilizei o VSCode), ao tentar criar um arquivo com terminação .ipynb, o próprio VSCode pergunta se deseja instalar o pacote, se marcar que sim, a instalação é feita automaticamente.
-
-Uma outra coisa importante é verificar se a variável de ambiente criada via o comando poetry shell pôde ser reconhecida pela IDE. 
-
-Depois de instalado o ipykernel, vai ser necessária a instalação de alguns pacotes. Isso é possível abrindo um terminal.
-Ao digitar poetry shell, você habilita o shell para executar comandos python.
-
-Agora para instalar os pacotes basta digitar no terminal:
-```bash
-poetry add nome_do_pacote
-```
-
-### About Spacy and Poetry
-
-Para usar o Spacy como pacote de Processamento de Linguagem Natural é necessário fazer o download do modelo treinado. 
-Para fazer o download do modelo treinado com Poetry basta ir na web page de documentação do Spacy [https://spacy.io/usage#quickstart](https://spacy.io/usage#quickstart)
-e procurar o idioma em que se quer trabalhar. Há várias opções de idioma e algumas opções de modelos mais simples e com mais acurácia.
-Escolha o modelo ideal e procure o link para download na web page [https://github.com/explosion/spacy-models/releases/](https://github.com/explosion/spacy-models/releases/)
-Modifique o arquivo pyproject.toml acrescentando a dependência desejada. 
-No projeto em questão, o modelo treinado escolhido foi o en_core_web_trf, e sua URL para download foi:
-https://github.com/explosion/spacy-models/releases/download/en_core_web_trf-3.7.1/en_core_web_trf-3.7.1.tar.gz
-
-Logo, foi acrescentado no arquivo de terminação .toml o seguinte:
-en_core_web_trf = {url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_trf-3.7.1/en_core_web_trf-3.7.1.tar.gz"}
-
-Após essa etapa, rode em um terminal o seguinte comando:
-
-```bash
-poetry add https://github.com/explosion/spacy-models/releases/download/en_core_web_trf-3.7.1/en_core_web_trf-3.7.1.tar.gz
-```
-Após realizada essa etapa, o modelo treinado estará disponível para ser utilizado.
+After installation, you can run the included scripts to perform analyses. The results will be saved in output files or displayed in charts, depending on the script used.
